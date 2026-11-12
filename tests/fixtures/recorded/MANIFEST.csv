@@ -1,0 +1,3 @@
+url,file,retrieved_on,final_url
+https://stats.example.gov/release/payrolls-2026-10,pages/payrolls_2026_10.txt,2026-11-07,
+https://stats.example.gov/r/oct,pages/payrolls_2026_10.txt,2026-11-07,https://stats.example.gov/release/payrolls-2026-10

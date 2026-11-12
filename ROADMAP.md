@@ -3,7 +3,7 @@
 gsps-fetch is built in seven phases. Each phase lands as its own pull request with tests,
 and CI stays green on every commit.
 
-1. [ ] **Fetcher interface and replay fetcher.** The `Fetcher` contract, request and result
+1. [x] **Fetcher interface and replay fetcher.** The `Fetcher` contract, request and result
    records with a SHA-256 receipt, and a fetcher that replays saved pages with no network.
 2. [ ] **Source policy.** Dated, versioned allow and block lists; domain resolution
    (subdomains, `www.`); link shorteners refused until expanded; open and closed modes;

@@ -45,9 +45,46 @@ pip install -e ".[dev]"     # from a clone; pulls gsps from GitHub
 make check                  # lint, strict types, tests with coverage
 ```
 
+## Quick start
+
+Replay a saved page (no network) and get it back with its receipt:
+
+```python
+from pathlib import Path
+
+from gsps.vocab.values import Gate
+from gsps_fetch import FetchRequest, RecordedFetcher
+
+fetcher = RecordedFetcher(Path("tests/fixtures/recorded"))
+result = fetcher.fetch(
+    FetchRequest(url="https://stats.example.gov/release/payrolls-2026-10", gate=Gate.PASTE)
+)
+print(result.ok, result.gate.value, result.retrieved_on, result.sha256[:12])
+# True paste 2026-11-07 <first 12 hex characters of the receipt>
+
+missing = fetcher.fetch(FetchRequest(url="https://stats.example.gov/nope", gate=Gate.PASTE))
+print(missing.ok, missing.gate.value, missing.detail)
+# False 404 not in this recording
+```
+
+A recording is a folder with a `MANIFEST.csv` (`url`, `file`, `retrieved_on`, optional
+`final_url`) and the saved text files it names. Any fetcher you write implements the same
+`Fetcher` interface: one `fetch(request) -> result` method and a `name`.
+
+## Layout
+
+```
+src/gsps_fetch/
+  protocol.py    Fetcher interface, FetchRequest, FetchResult, content_hash
+  recorded.py    RecordedFetcher: replays saved pages, never opens a URL
+tests/
+  fixtures/recorded/   a synthetic recording
+```
+
 ## Status
 
-Early. The fetcher is being built in seven phases; see [`ROADMAP.md`](ROADMAP.md).
+Phase 1 of 7 is done. See [`ROADMAP.md`](ROADMAP.md) for what comes next; plans are also
+tracked in the repository's issues.
 
 ## License
 
